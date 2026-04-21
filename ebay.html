@@ -1,101 +1,108 @@
-Advanced Users Only — Home Assistant knowledge required.
-
-What It Does
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>ratgdo Slim - eBay Listing</title>
+	<title>ratgdo Slim — eBay Listing</title>
 	<style>
 		:root {
-			--bg: #f6f8f9;
+			--bg: #f4f7f9;
 			--card: #ffffff;
 			--ink: #1a232b;
 			--muted: #5c6b75;
 			--brand: #006e7a;
 			--accent: #f28f3b;
 			--line: #d7dde2;
-			--ok: #2a7f3f;
+			--ok: #1e6e35;
 			--warn-bg: #fff8e8;
 			--warn-line: #e6be6d;
+			--our-head: #005f6b;
 		}
 
-		* {
-			box-sizing: border-box;
-		}
+		* { box-sizing: border-box; }
 
 		body {
 			margin: 0;
-			background: radial-gradient(circle at 10% 0%, #eaf2f5 0%, var(--bg) 45%, #edf0f2 100%);
+			background: var(--card);
 			color: var(--ink);
 			font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-			line-height: 1.55;
-			padding: 20px;
+			line-height: 1.6;
+			padding: 0;
 		}
 
 		.listing {
-			max-width: 1000px;
-			margin: 0 auto;
+			width: 100%;
 			background: var(--card);
-			border: 1px solid var(--line);
-			border-radius: 16px;
-			overflow: hidden;
-			box-shadow: 0 8px 30px rgba(26, 35, 43, 0.08);
 		}
 
+		/* ── Hero ── */
 		.hero {
-			padding: 28px 24px;
-			background: linear-gradient(120deg, #0a4a52 0%, var(--brand) 45%, #2a8f9c 100%);
+			padding: 32px 28px 24px;
+			background: linear-gradient(120deg, #08404a 0%, var(--brand) 55%, #2a9caa 100%);
 			color: #fff;
 		}
 
 		.hero h1 {
 			margin: 0 0 8px;
-			font-size: 30px;
+			font-size: 28px;
 			line-height: 1.2;
+			font-weight: 800;
 		}
 
 		.hero p {
-			margin: 0;
-			font-size: 16px;
-			opacity: 0.96;
+			margin: 0 0 16px;
+			font-size: 15px;
+			opacity: 0.92;
+			max-width: 620px;
 		}
+
+		.hero-pills { display: flex; flex-wrap: wrap; gap: 8px; }
 
 		.pill {
 			display: inline-block;
-			margin-top: 12px;
-			padding: 6px 10px;
+			padding: 5px 12px;
 			border-radius: 999px;
-			background: rgba(255, 255, 255, 0.2);
 			font-size: 12px;
 			text-transform: uppercase;
 			letter-spacing: 0.06em;
 			font-weight: 700;
 		}
 
-		.section {
-			padding: 22px 24px;
-			border-top: 1px solid var(--line);
-		}
+		.pill-warn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); }
+		.pill-v1   { background: rgba(255,255,255,0.9); color: #005f6b; }
+		.pill-v2   { background: var(--accent); color: #fff; }
+
+		/* ── Sections ── */
+		.section { padding: 24px 28px; border-top: 1px solid var(--line); }
 
 		h2 {
-			margin: 0 0 12px;
-			font-size: 22px;
+			margin: 0 0 16px;
+			font-size: 20px;
+			font-weight: 700;
 			color: #0f3640;
+			display: flex;
+			align-items: center;
+			gap: 8px;
 		}
 
-		h3 {
-			margin: 18px 0 8px;
-			font-size: 18px;
-			color: #184f5b;
+		h2::before {
+			content: '';
+			display: inline-block;
+			width: 4px;
+			height: 20px;
+			background: var(--brand);
+			border-radius: 2px;
+			flex-shrink: 0;
 		}
 
-		ul {
-			margin: 10px 0;
-			padding-left: 18px;
-		}
+		h3 { margin: 0 0 10px; font-size: 16px; font-weight: 700; color: #184f5b; }
 
+		p { margin: 0 0 10px; }
+
+		ul, ol { margin: 8px 0 10px; padding-left: 20px; }
+		li { margin-bottom: 4px; }
+
+		/* ── Cards ── */
 		.grid {
 			display: grid;
 			grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -103,21 +110,43 @@ What It Does
 		}
 
 		.box {
-			background: #fafcfd;
+			background: #f7fbfc;
 			border: 1px solid var(--line);
-			border-radius: 10px;
-			padding: 14px;
+			border-radius: 12px;
+			padding: 16px 18px;
+			transition: box-shadow 0.15s, border-color 0.15s;
 		}
 
+		.box:hover {
+			box-shadow: 0 4px 16px rgba(0, 110, 122, 0.10);
+			border-color: #b5d5da;
+		}
+
+		/* ── Alerts ── */
 		.warning {
 			background: var(--warn-bg);
 			border: 1px solid var(--warn-line);
 			border-left: 5px solid var(--accent);
 			border-radius: 10px;
-			padding: 12px 14px;
-			margin: 10px 0;
+			padding: 13px 16px;
+			margin: 14px 0 0;
 		}
 
+		.info {
+			background: #edf7f8;
+			border: 1px solid #b3d9de;
+			border-left: 5px solid var(--brand);
+			border-radius: 10px;
+			padding: 13px 16px;
+			margin: 16px 0 0;
+		}
+
+		/* ── Wire colors ── */
+		.wire-red   { color: #c0392b; font-weight: 700; }
+		.wire-white { background: #555; color: #fff; padding: 1px 5px; border-radius: 3px; font-weight: 700; font-size: 13px; }
+		.wire-black { background: #1c1c1c; color: #fff; padding: 1px 5px; border-radius: 3px; font-weight: 700; font-size: 13px; }
+
+		/* ── Table ── */
 		.table-wrap {
 			overflow-x: auto;
 			border: 1px solid var(--line);
@@ -127,317 +156,356 @@ What It Does
 
 		table {
 			width: 100%;
-				min-width: 1120px;
+			min-width: 1100px;
 			border-collapse: collapse;
-			font-size: 14px;
+			font-size: 13.5px;
 		}
 
-		th,
-		td {
+		th, td {
 			border-bottom: 1px solid #e4eaee;
 			border-right: 1px solid #e4eaee;
-			padding: 10px 8px;
+			padding: 9px 10px;
 			text-align: center;
 			vertical-align: middle;
 			white-space: nowrap;
 		}
 
-		th:first-child,
-		td:first-child {
+		th:first-child, td:first-child {
 			text-align: left;
 			font-weight: 600;
 			white-space: normal;
-			min-width: 220px;
-			background: #f8fbfd;
+			min-width: 210px;
+			background: #f4f8fa;
 		}
 
-		th {
-			background: #e7f2f4;
-			color: #123f48;
-			font-weight: 700;
+		th { font-weight: 700; }
+
+		tr:last-child td { border-bottom: 0; }
+		td:last-child, th:last-child { border-right: 0; }
+
+		/* group header row */
+		.group-row th {
+			font-size: 11px;
+			text-transform: uppercase;
+			letter-spacing: 0.07em;
+			padding: 7px 10px;
+			border-bottom: 2px solid #9fcdd4;
 		}
 
-		tr:last-child td {
-			border-bottom: 0;
-		}
+		.group-row th:first-child { background: #f4f8fa; color: transparent; }
 
-		td:last-child,
-		th:last-child {
-			border-right: 0;
-		}
+		.our-head { background: var(--our-head); color: #fff; }
+		.comp-head { background: #3d5a62; color: #fff; }
 
-		.yes {
-			color: var(--ok);
-			font-weight: 700;
-		}
+		/* feature header row */
+		.feat-row th { background: #e0eff2; color: #0f3640; }
+		.feat-row th.our-th { background: #bde5ea; color: #003d45; }
 
-		.no {
-			color: #8a1f1f;
-			font-weight: 700;
-		}
+		/* our-product column body highlight */
+		tbody td:nth-child(2),
+		tbody td:nth-child(3) { background: rgba(0, 110, 122, 0.04); }
 
-		.cta {
-			background: #f1f8fa;
-			border: 1px solid #cfe2e8;
-			border-radius: 12px;
-			padding: 16px;
+		tbody tr:hover td                        { background: #f0f8f9 !important; }
+		tbody tr:hover td:nth-child(2),
+		tbody tr:hover td:nth-child(3)           { background: #d8eef1 !important; }
+
+		.yes { color: var(--ok); font-weight: 700; }
+		.no  { color: #8a1f1f; font-weight: 700; }
+
+		/* ── CTA ── */
+		.cta-wrap {
+			padding: 30px 28px;
+			background: linear-gradient(135deg, #e8f6f8 0%, #f4fbfc 100%);
+			border-top: 2px solid #b8dde2;
 			text-align: center;
-			font-size: 17px;
-			font-weight: 600;
-			color: #11414a;
 		}
 
-		.small {
-			color: var(--muted);
+		.cta-text {
+			font-size: 20px;
+			font-weight: 800;
+			color: #08404a;
+			margin: 0 0 6px;
+		}
+
+		.cta-sub { font-size: 13px; color: var(--muted); margin: 0; }
+
+		/* ── Misc ── */
+		.small { color: var(--muted); font-size: 13px; margin: 10px 0 0; }
+
+		code {
+			background: #eef2f4;
+			padding: 1px 5px;
+			border-radius: 4px;
 			font-size: 13px;
 		}
 
-		@media (max-width: 760px) {
-			body {
-				padding: 10px;
-			}
+		/* Box card headings */
+		.box h3 {
+			border-bottom: 1px solid rgba(0, 110, 122, 0.18);
+			padding-bottom: 7px;
+		}
 
-			.hero,
-			.section {
-				padding: 18px 16px;
-			}
+		/* Steps label → ordered list gap */
+		strong + ol { margin-top: 4px; }
 
-			.hero h1 {
-				font-size: 24px;
-			}
+		/* Wire colour labels */
+		.wire-line { margin: 4px 0; }
 
-			.grid {
-				grid-template-columns: 1fr;
-			}
+		/* Alert paragraph margins */
+		.warning p, .info p { margin: 0 0 8px; }
+
+		@media (max-width: 700px) {
+			body { padding: 10px 8px; }
+			.hero { padding: 20px 16px 18px; }
+			.section { padding: 18px 16px; }
+			.hero h1 { font-size: 22px; }
+			.grid { grid-template-columns: 1fr; }
+			.cta-wrap { padding: 22px 16px; }
 		}
 	</style>
 </head>
 <body>
-	<div class="listing">
-		<section class="hero">
-			<h1>ratgdo Slim Garage Door Control Board</h1>
-			<p>Integrate your Chamberlain or LiftMaster opener with Home Assistant and HomeKit, including Siri support.</p>
-			<span class="pill">Advanced users: Home Assistant knowledge required</span>
-		</section>
+<div class="listing">
 
-		<section class="section">
-			<h2>What It Does</h2>
-			<p>
-				Connects your garage opener to your home network for local smart control, real-time status, and automation.
-			</p>
-			<div class="grid">
-				<div class="box">
-					<h3>Compatibility</h3>
-					<ul>
-						<li><strong>Security+ 2.0</strong> (round yellow learn button): fully supported.
-							<ul>
-								<li><strong>Exclusions — jackshaft models not supported:</strong>
-									<ul>
-										<li>8500 / RJ020</li>
-										<li>8500C / RJ020C</li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-						<li><strong>Security+ 1.0</strong> (purple, brown, orange, red learn button): experimental support.
-							<ul>
-								<li><em>May not work with all openers or wall control panels.</em></li>
-								<li>Experimental jackshaft models:
-									<ul>
-										<li>8500 / RJ020</li>
-										<li>8500C / RJ020C</li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-						<li>ESP8266 with 1MB, 2MB, or 4MB flash supported.</li>
-						<li>Chamberlain and LiftMaster openers (Security+ 1.0 and 2.0 wall-control wiring).</li>
-						<li><em>Dry contact is supported in the ecosystem but is not provided on this board in the current build.</em></li>
-					</ul>
-				</div>
-				<div class="box">
-					<h3>What Makes Slim Special</h3>
-					<ul>
-						<li>3-terminal push spring connector (no screwdriver needed).</li>
-						<li>ESP8266 D1 Mini with USB-C.</li>
-						<li>Socketed ESP module for easy replacement.</li>
-						<li>Custom 3D-printed vented case for clean mounting.</li>
-					</ul>
-				</div>
+	<!-- Hero -->
+	<section class="hero">
+		<h1>ratgdo Slim — Garage Door Control Board</h1>
+		<p>Local smart control for Chamberlain / LiftMaster openers via Home Assistant, HomeKit, or ESPHome. No cloud. No subscription.</p>
+		<div class="hero-pills">
+			<span class="pill pill-v1">v1.00 — On-board Antenna</span>
+			<span class="pill pill-v2">v2.00 — +2 dBi SMA Antenna Included</span>
+			<span class="pill pill-warn">Advanced Users · Home Assistant Knowledge Required</span>
+		</div>
+	</section>
+
+	<!-- What It Does -->
+	<section class="section">
+		<h2>What It Does</h2>
+		<p>Connects your garage opener to your home network for local smart control, real-time status, and automation — no cloud, no monthly fees.</p>
+		<div class="grid">
+			<div class="box">
+				<h3>Compatibility</h3>
+				<ul>
+					<li><strong>Security+ 2.0</strong> (round yellow learn button) — fully supported.
+						<ul>
+							<li><strong>Excluded jackshaft models (not supported):</strong>
+								<ul>
+									<li>8500 / RJ020</li>
+									<li>8500C / RJ020C</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li><strong>Security+ 1.0</strong> (purple, brown, orange, or red learn button) — experimental support.
+						<ul>
+							<li><em>May not work with all openers or wall control panels.</em></li>
+							<li>Experimental jackshaft models:
+								<ul>
+									<li>8500 / RJ020</li>
+									<li>8500C / RJ020C</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>Chamberlain and LiftMaster openers.</li>
+					<li>ESP8266 with 1 MB, 2 MB, or 4 MB flash supported.</li>
+					<li><em>Dry contact supported in ecosystem — not provided on this board in the current build.</em></li>
+				</ul>
 			</div>
-
-			<div class="warning">
-				<strong>Wire before powering.</strong> Incorrect wiring can damage the board.<br>
-				RED -> Wall control RED<br>
-				WHITE -> Ground (GND)<br>
-				BLACK -> Obstruction/control line
+			<div class="box">
+				<h3>What Makes Slim Special</h3>
+				<ul>
+					<li>3-terminal push spring connector — no screwdriver needed.</li>
+					<li>ESP8266 D1 Mini with USB-C port.</li>
+					<li>Socketed ESP module — swap without soldering.</li>
+					<li>SMA connector pin on board — upgrade antenna any time, no tools.</li>
+					<li>Custom 3D-printed vented case for clean mounting.</li>
+					<li>All boards tested before shipping.</li>
+				</ul>
 			</div>
-		</section>
+		</div>
+		<div class="warning">
+			<p><strong>⚠ Wire before powering.</strong> Incorrect wiring can damage the board or opener.</p>
+			<div class="wire-line"><span class="wire-red">RED</span> → Wall control <span class="wire-red">RED</span></div>
+			<div class="wire-line"><span class="wire-white">WHITE</span> → Ground (GND)</div>
+			<div class="wire-line"><span class="wire-black">BLACK</span> → Obstruction / control line</div>
+		</div>
+	</section>
 
-		<section class="section">
-			<h2>Firmware &amp; Setup</h2>
-			<p>Ships pre-flashed. Compatible with ESPHome, HomeKit firmware, or Paul Wieland's ratgdo firmware — your choice.</p>
-			<div class="grid">
-				<div class="box">
-					<h3>ESPHome (Recommended)</h3>
-					<ul>
-						<li><strong>Best for:</strong> Apple and Android users, mixed-device households.</li>
-						<li><strong>Setup:</strong> Moderate — requires Home Assistant.</li>
-						<li><strong>HomeKit:</strong> Via Home Assistant HomeKit bridge.</li>
-						<li><strong>Diagnostics:</strong> Advanced (ESPHome logs and web interface).</li>
-						<li><strong>OTA Updates:</strong> Supported.</li>
-					</ul>
-					<strong>Steps:</strong>
-					<ol>
-						<li>Power opener OFF and complete wiring.</li>
-						<li>Power on via USB-C. Connect to <strong>ratgdo</strong> Wi-Fi AP.</li>
-						<li>Open <code>192.168.4.1</code> and configure your 2.4 GHz network.</li>
-						<li>Add device in Home Assistant → Settings → Devices &amp; Services.</li>
-						<li>Create HomeKit bridge in Home Assistant and add to Apple Home.</li>
-						<li>Test door, light, and obstruction sensor. Assign a static IP.</li>
-					</ol>
-				</div>
-				<div class="box">
-					<h3>HomeKit Direct</h3>
-					<ul>
-						<li><strong>Best for:</strong> Apple-only households, simpler setup.</li>
-						<li><strong>Setup:</strong> Simple — no Home Assistant required.</li>
-						<li><strong>HomeKit:</strong> Native accessory, direct pairing.</li>
-						<li><strong>Diagnostics:</strong> Basic device web interface.</li>
-						<li><strong>OTA Updates:</strong> Limited availability.</li>
-					</ul>
-					<strong>Steps:</strong>
-					<ol>
-						<li>Power opener OFF and complete wiring.</li>
-						<li>Power on via USB-C. Connect to <strong>Garage-Door-ABCDE</strong> (last 5 MAC chars).</li>
-						<li>Open <code>192.168.4.1</code> and configure your 2.4 GHz network.</li>
-						<li>Open the device IP to get your HomeKit pairing code.</li>
-						<li>Add accessory in the Apple Home app.</li>
-						<li>Test door, light, and sensor. Assign a static IP.</li>
-					</ol>
-				</div>
+	<!-- Firmware & Setup -->
+	<section class="section">
+		<h2>Firmware &amp; Setup</h2>
+		<p>Ships pre-flashed and ready to use. Compatible with ESPHome, HomeKit firmware, or Paul Wieland's ratgdo firmware — your choice.</p>
+		<div class="grid">
+			<div class="box">
+				<h3>ESPHome <span style="font-weight:400;font-size:13px;color:#1e6e35;">★ Recommended</span></h3>
+				<ul>
+					<li><strong>Best for:</strong> Apple and Android users, mixed households.</li>
+					<li><strong>Requires:</strong> Home Assistant.</li>
+					<li><strong>HomeKit:</strong> Via Home Assistant HomeKit bridge.</li>
+					<li><strong>Diagnostics:</strong> ESPHome logs + web interface.</li>
+					<li><strong>OTA Updates:</strong> Supported.</li>
+				</ul>
+				<strong>Steps:</strong>
+				<ol>
+					<li>Power opener OFF and complete wiring first.</li>
+					<li>Power on via USB-C. Connect to <strong>ratgdo</strong> Wi-Fi AP.</li>
+					<li>Open <code>192.168.4.1</code> → select your 2.4 GHz network.</li>
+					<li>Add in Home Assistant → Settings → Devices &amp; Services.</li>
+					<li>Create HomeKit bridge in HA → add to Apple Home.</li>
+					<li>Test door, light, obstruction sensor. Assign static IP.</li>
+				</ol>
 			</div>
-			<div class="warning">
-				<strong>What You'll Need</strong><br>
-				1x ratgdo PCB (this listing) &nbsp;·&nbsp; USB-A to USB-C cable &nbsp;·&nbsp; 5V USB power supply &nbsp;·&nbsp; Garage door opener wall-control wires (RED / WHITE / BLACK)
+			<div class="box">
+				<h3>HomeKit Direct</h3>
+				<ul>
+					<li><strong>Best for:</strong> Apple-only households, simpler setup.</li>
+					<li><strong>Requires:</strong> Apple Home app + HomeKit hub for remote.</li>
+					<li><strong>HomeKit:</strong> Native accessory, direct pairing.</li>
+					<li><strong>Diagnostics:</strong> Basic device web interface.</li>
+					<li><strong>OTA Updates:</strong> Limited.</li>
+				</ul>
+				<strong>Steps:</strong>
+				<ol>
+					<li>Power opener OFF and complete wiring first.</li>
+					<li>Power on via USB-C. Connect to <strong>Garage-Door-XXXXX</strong> (last 5 MAC chars).</li>
+					<li>Open <code>192.168.4.1</code> → select your 2.4 GHz network.</li>
+					<li>Navigate to device IP → get your HomeKit pairing code.</li>
+					<li>Add accessory in Apple Home.</li>
+					<li>Test door, light, sensor. Assign static IP.</li>
+				</ol>
 			</div>
-		</section>
+		</div>
+		<div class="info">
+			<strong>What You'll Need</strong><br>
+			1× ratgdo PCB (this listing) &nbsp;·&nbsp; USB-A to USB-C cable &nbsp;·&nbsp; 5 V USB power supply &nbsp;·&nbsp; Wall-control wires from opener (<span class="wire-red">RED</span> / <span class="wire-white">WHITE</span> / <span class="wire-black">BLACK</span>)
+		</div>
+	</section>
 
-		<section class="section">
-			<h2>Comparison Matrix</h2>
-			<p class="small">
-				This matrix shows your ESP8266 versions first, with main competition on v2.51 and v2.53.
-			</p>
-			<div class="table-wrap">
-				<table>
-					<thead>
-						<tr>
-							<th>Feature</th>
-							<th>v1.00</th>
-							<th>v2.00</th>
-							<th>v2.51</th>
-							<th>v2.53</th>
-							<th>Competitors</th>
-							<th>Ratgdo DIY</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr><td>ESP Chip</td><td>ESP8266</td><td>ESP8266</td><td>ESP8266</td><td>ESP8266</td><td>ESP32</td><td>ESP8266</td></tr>
-						<tr><td>Replaceable ESP Module</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="yes">Yes</td></tr>
-						<tr><td>Fuse Protection</td><td class="no">No*</td><td class="no">No*</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td></tr>
-						<tr><td>6V-30V Converter</td><td class="no">No*</td><td class="no">No*</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td></tr>
-						<tr><td>Buzzer</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
-						<tr><td>Temperature</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
-						<tr><td>Humidity</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
-						<tr><td>Status LEDs (Power/Data Transfer)</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td></tr>
-						<tr><td>Access to All Circuits on PCB</td><td>Modified Only*</td><td>Modified Only*</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td></tr>
-						<tr><td>Home Assistant Integration (GDO)</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
-						<tr><td>Apple HomeKit Support</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
-						<tr><td>Wi-Fi Antenna</td><td>On-board + SMA Pin&#8224;</td><td>On-board + SMA Pin + 2 dBi Antenna&#8224;</td><td>On-board</td><td>On-board + 2 dBi Antenna</td><td>Standard</td><td>Standard</td></tr>
-						<tr><td>USB Connector</td><td class="yes">USB-C</td><td class="yes">USB-C</td><td class="yes">USB-C</td><td>Micro USB</td><td>Varies</td><td>Micro USB</td></tr>
-						<tr><td>Camera</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
-						<tr><td>Obstruction Status</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td>Partial</td><td class="no">No</td></tr>
-						<tr><td>Light Control and Status</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
-						<tr><td>Door Control and Status</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
-						<tr><td>Wireless Remote Lockout</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
-						<tr><td>Tariffs (US &amp; Canada)</td><td>N/A — Ships from USA</td><td>N/A — Ships from USA</td><td class="yes">Included</td><td class="yes">Included</td><td class="no">May Apply</td><td>N/A</td></tr>
-					</tbody>
-				</table>
+	<!-- Comparison Matrix -->
+	<section class="section">
+		<h2>Comparison Matrix</h2>
+		<p class="small" style="margin-bottom:12px;">Our ESP8266-based boards are shown first. Primary competition: v2.51 and v2.53.</p>
+		<div class="table-wrap">
+			<table>
+				<thead>
+					<tr class="group-row">
+						<th></th>
+						<th colspan="2" class="our-head">★ Our Products</th>
+						<th colspan="4" class="comp-head">Competitors</th>
+					</tr>
+					<tr class="feat-row">
+						<th>Feature</th>
+						<th class="our-th">v1.00</th>
+						<th class="our-th">v2.00</th>
+						<th>v2.51</th>
+						<th>v2.53</th>
+						<th>Competitors</th>
+						<th>Ratgdo DIY</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td>ESP Chip</td><td>ESP8266</td><td>ESP8266</td><td>ESP8266</td><td>ESP8266</td><td>ESP32</td><td>ESP8266</td></tr>
+					<tr><td>Replaceable ESP Module</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="yes">Yes</td></tr>
+					<tr><td>Fuse Protection</td><td class="no">No*</td><td class="no">No*</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td></tr>
+					<tr><td>6V–30V Converter</td><td class="no">No*</td><td class="no">No*</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td></tr>
+					<tr><td>Buzzer</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+					<tr><td>Temperature Sensor</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+					<tr><td>Humidity Sensor</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+					<tr><td>Status LEDs (Power / Data)</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td></tr>
+					<tr><td>Access to All Circuits on PCB</td><td>Modified Only*</td><td>Modified Only*</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td></tr>
+					<tr><td>Home Assistant Integration (GDO)</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+					<tr><td>Apple HomeKit Support</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+					<tr><td>Wi-Fi Antenna</td><td>On-board + SMA Pin†</td><td>On-board + SMA + 2 dBi†</td><td>On-board</td><td>On-board + 2 dBi</td><td>Standard</td><td>Standard</td></tr>
+					<tr><td>USB Connector</td><td class="yes">USB-C</td><td class="yes">USB-C</td><td class="yes">USB-C</td><td>Micro-USB</td><td>Varies</td><td>Micro-USB</td></tr>
+					<tr><td>Camera</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+					<tr><td>Obstruction Status</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td>Partial</td><td class="no">No</td></tr>
+					<tr><td>Light Control &amp; Status</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+					<tr><td>Door Control &amp; Status</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+					<tr><td>Wireless Remote Lockout</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+					<tr><td>Tariffs (US &amp; Canada)</td><td>N/A — Ships from USA</td><td>N/A — Ships from USA</td><td class="yes">Included</td><td class="yes">Included</td><td class="no">May Apply</td><td>N/A</td></tr>
+				</tbody>
+			</table>
+		</div>
+		<p class="small">
+			* 6V–30V converter and fuse protection are mainly relevant for battery-operated openers. For wall-powered setups the 5 V USB-C supply is sufficient. PCB circuit access is possible with minor modification but is not direct out of the box.<br>
+			† v1.00 and v2.00 include a dedicated SMA connector — attach any standard SMA antenna at any time with no soldering required.
+		</p>
+	</section>
+
+	<!-- What Is Included -->
+	<section class="section">
+		<h2>What Is Included</h2>
+		<div class="grid">
+			<div class="box">
+				<h3>v1.00 — On-board Antenna + SMA Pin</h3>
+				<ul>
+					<li>1× Slim PCB (on-board antenna + SMA pin)</li>
+					<li>1× ESP8266 D1 Mini (USB-C)</li>
+					<li>1× Custom 3D-Printed Vented Case</li>
+					<li>1× 3C 26 AWG Wire</li>
+				</ul>
+				<p class="small">Upgrade to any SMA antenna at any time — no soldering needed.</p>
 			</div>
-			<p class="small">
-				*Notes: 6V-30V converter is mainly applicable for battery-operated garage door openers. Fuse protection becomes important in battery setups because 5V is regulated from the wall adapter through USB-C on ESP8266. PCB circuit access is possible with modification, but not direct out of the box.<br>
-			&#8224; v1.00 and v2.00 include a dedicated SMA connector pin — plug in any standard SMA antenna at any time to boost range without any soldering or modifications.
-			</p>
-		</section>
-
-		<section class="section">
-			<h2>What Is Included</h2>
-			<div class="grid">
-				<div class="box">
-					<h3>v1.00 — No External Antenna</h3>
-					<ul>
-						<li>1x Slim PCB (On-board antenna + SMA pin)</li>
-						<li>1x ESP8266 D1 Mini (USB-C)</li>
-						<li>1x Custom 3D-Printed Vented Case</li>
-						<li>1x 3C 26 AWG Wire</li>
-					</ul>
-					<p class="small">Ready to plug in. Upgrade to any SMA antenna any time — no soldering needed.</p>
-				</div>
-				<div class="box">
-					<h3>v2.00 — With 2 dBi SMA Antenna</h3>
-					<ul>
-						<li>1x Slim PCB (On-board antenna + SMA pin)</li>
-						<li>1x ESP8266 D1 Mini (USB-C)</li>
-						<li>1x Custom 3D-Printed Vented Case</li>
-						<li>1x 2 dBi External SMA Antenna</li>
-						<li>1x 3C 26 AWG Wire</li>
-					</ul>
-					<p class="small">Everything included. Better range out of the box.</p>
-				</div>
+			<div class="box">
+				<h3>v2.00 — On-board + 2 dBi SMA Antenna</h3>
+				<ul>
+					<li>1× Slim PCB (on-board antenna + SMA pin)</li>
+					<li>1× ESP8266 D1 Mini (USB-C)</li>
+					<li>1× Custom 3D-Printed Vented Case</li>
+					<li>1× 2 dBi External SMA Antenna</li>
+					<li>1× 3C 26 AWG Wire</li>
+				</ul>
+				<p class="small">Better range out of the box. Still upgradeable to any higher-gain SMA antenna.</p>
 			</div>
-			<p class="small">USB-A to USB-C cable not included. ⚠️ USB-C to USB-C cables do not work — use a USB-A to USB-C cable only. All boards are tested before shipping.</p>
-		</section>
+		</div>
+		<div class="warning" style="margin-top:14px;">
+			USB-A to USB-C cable <strong>not included</strong>. &nbsp;⚠ USB-C to USB-C cables <strong>do not work</strong> — use USB-A to USB-C only.
+		</div>
+	</section>
 
-		<section class="section">
-			<h2>Troubleshooting</h2>
-			<div class="grid">
-				<div class="box">
-					<h3>ESPHome</h3>
-					<ul>
-						<li>Confirm ratgdo and Home Assistant are on the same 2.4 GHz network.</li>
-						<li>Check ESPHome logs and HA device status for errors.</li>
-						<li>For HomeKit pairing issues, remove and re-add the HomeKit bridge.</li>
-						<li>If door status is wrong, recalibrate open/close travel.</li>
-						<li>Power cycle the device for 10 seconds.</li>
-					</ul>
-				</div>
-				<div class="box">
-					<h3>HomeKit Direct</h3>
-					<ul>
-						<li>Confirm ratgdo and your iPhone/iPad are on the same 2.4 GHz network.</li>
-						<li>Verify your HomeKit hub is online for remote control to work.</li>
-						<li>If pairing fails, reset and re-add the accessory in Apple Home.</li>
-						<li>If needed, factory reset (hold reset 10 s) and reflash.</li>
-						<li>Power cycle the device for 10 seconds.</li>
-					</ul>
-				</div>
+	<!-- Troubleshooting -->
+	<section class="section">
+		<h2>Troubleshooting</h2>
+		<div class="grid">
+			<div class="box">
+				<h3>ESPHome</h3>
+				<ul>
+					<li>Confirm ratgdo and Home Assistant are on the same 2.4 GHz network.</li>
+					<li>Check ESPHome logs and HA device status for errors.</li>
+					<li>For HomeKit pairing issues, remove and re-add the HomeKit bridge.</li>
+					<li>If door status is wrong, recalibrate open/close travel.</li>
+					<li>Power cycle the device for 10 seconds.</li>
+				</ul>
 			</div>
-		</section>
+			<div class="box">
+				<h3>HomeKit Direct</h3>
+				<ul>
+					<li>Confirm ratgdo and your iPhone/iPad are on the same 2.4 GHz network.</li>
+					<li>Verify your HomeKit hub is online for remote control to work.</li>
+					<li>If pairing fails, reset and re-add the accessory in Apple Home.</li>
+					<li>If needed, factory reset (hold reset 10 s) and reflash.</li>
+					<li>Power cycle the device for 10 seconds.</li>
+				</ul>
+			</div>
+		</div>
+	</section>
 
-		<section class="section">
-			<h2>Shipping and Returns</h2>
-			<ul>
-				<li>Free shipping to lower 48 US states.</li>
-				<li>No returns for wiring errors, incompatibility, or setup issues.</li>
-			</ul>
-			<p class="small">
-				Works with the open-source ratgdo ecosystem. Home Assistant and related integrations are community-driven and may change over time.
-			</p>
-		</section>
+	<!-- Shipping & Returns -->
+	<section class="section">
+		<h2>Shipping &amp; Returns</h2>
+		<ul>
+			<li>Free shipping — lower 48 US states.</li>
+			<li>No returns for wiring errors, incompatibility, or setup issues.</li>
+		</ul>
+		<p class="small">Ships from the USA — no import tariffs for US buyers. Works with the open-source ratgdo ecosystem. Home Assistant and related integrations are community-driven and may change over time.</p>
+	</section>
 
-		<section class="section">
-			<div class="cta">Take back control of your garage and skip subscription lock-in. Order now.</div>
-		</section>
+	<!-- CTA -->
+	<div class="cta-wrap">
+		<p class="cta-text">Take back control of your garage — ditch the myQ subscription today.</p>
+		<p class="cta-sub">Questions before you buy? Send a message and we'll get back to you.</p>
 	</div>
+
+</div>
 </body>
-</html>
