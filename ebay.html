@@ -156,7 +156,7 @@
 
 		table {
 			width: 100%;
-			min-width: 1100px;
+			min-width: 900px;
 			border-collapse: collapse;
 			font-size: 13.5px;
 		}
@@ -233,10 +233,13 @@
 		.small { color: var(--muted); font-size: 13px; margin: 10px 0 0; }
 
 		code {
-			background: #eef2f4;
-			padding: 1px 5px;
+			background: #dde8ec;
+			color: #0f3640;
+			padding: 2px 6px;
 			border-radius: 4px;
 			font-size: 13px;
+			font-weight: 600;
+			border: 1px solid #b3cdd4;
 		}
 
 		/* Box card headings */
@@ -253,6 +256,44 @@
 
 		/* Alert paragraph margins */
 		.warning p, .info p { margin: 0 0 8px; }
+
+		/* ── Advantage boxes ── */
+		.adv-grid {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 16px;
+			margin-top: 16px;
+		}
+
+		.adv-box {
+			background: linear-gradient(135deg, #eaf6f8 0%, #f4fbfc 100%);
+			border: 1px solid #9fcdd4;
+			border-left: 5px solid var(--brand);
+			border-radius: 12px;
+			padding: 16px 18px;
+		}
+
+		.adv-box h3 {
+			color: var(--our-head);
+			border-bottom: 1px solid rgba(0,110,122,0.18);
+			padding-bottom: 7px;
+			margin-bottom: 8px;
+		}
+
+		.adv-label {
+			display: inline-block;
+			background: var(--brand);
+			color: #fff;
+			font-size: 10px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.07em;
+			padding: 2px 8px;
+			border-radius: 999px;
+			margin-bottom: 6px;
+		}
+
+		@media (max-width: 700px) { .adv-grid { grid-template-columns: 1fr; } }
 
 		@media (max-width: 700px) {
 			body { padding: 10px 8px; }
@@ -272,8 +313,8 @@
 		<h1>ratgdo Slim — Garage Door Control Board</h1>
 		<p>Local smart control for Chamberlain / LiftMaster openers via Home Assistant, HomeKit, or ESPHome. No cloud. No subscription.</p>
 		<div class="hero-pills">
-			<span class="pill pill-v1">v1.00 — On-board Antenna</span>
-			<span class="pill pill-v2">v2.00 — +2 dBi SMA Antenna Included</span>
+			<span class="pill pill-v1">v1.00 — On-board + SMA Port</span>
+			<span class="pill pill-v2">v2.00 — SMA to IPEX + 2 dBi Antenna Included</span>
 			<span class="pill pill-warn">Advanced Users · Home Assistant Knowledge Required</span>
 		</div>
 	</section>
@@ -288,39 +329,25 @@
 				<ul>
 					<li><strong>Security+ 2.0</strong> (round yellow learn button) — fully supported.
 						<ul>
-							<li><strong>Excluded jackshaft models (not supported):</strong>
-								<ul>
-									<li>8500 / RJ020</li>
-									<li>8500C / RJ020C</li>
-								</ul>
-							</li>
+							<li><strong>Not supported:</strong> jackshaft models 8500 / RJ020 and 8500C / RJ020C.</li>
 						</ul>
 					</li>
-					<li><strong>Security+ 1.0</strong> (purple, brown, orange, or red learn button) — experimental support.
-						<ul>
-							<li><em>May not work with all openers or wall control panels.</em></li>
-							<li>Experimental jackshaft models:
-								<ul>
-									<li>8500 / RJ020</li>
-									<li>8500C / RJ020C</li>
-								</ul>
-							</li>
-						</ul>
-					</li>
+					<li><strong>Security+ 1.0</strong> (purple, brown, orange, or red learn button) — experimental. May not work with all openers or wall panels.</li>
 					<li>Chamberlain and LiftMaster openers.</li>
-					<li>ESP8266 with 1 MB, 2 MB, or 4 MB flash supported.</li>
-					<li><em>Dry contact supported in ecosystem — not provided on this board in the current build.</em></li>
+					<li><em>Dry contact supported in the ratgdo ecosystem — not wired by default, but the board can be modified to add dry contact support.</em></li>
 				</ul>
 			</div>
 			<div class="box">
 				<h3>What Makes Slim Special</h3>
 				<ul>
+					<li>USB-C power on both versions — use cables you already own.</li>
 					<li>3-terminal push spring connector — no screwdriver needed.</li>
-					<li>ESP8266 D1 Mini with USB-C port.</li>
-					<li>Socketed ESP module — swap without soldering.</li>
-					<li>SMA connector pin on board — upgrade antenna any time, no tools.</li>
-					<li>Custom 3D-printed vented case for clean mounting.</li>
-					<li>All boards tested before shipping.</li>
+					<li>Socketed ESP8266 D1 Mini — pull it out and swap in seconds, no soldering.</li>
+					<li><strong>v1.00:</strong> SMA port on board — plug in any SMA antenna, works immediately, no chip modification needed.</li>
+					<li><strong>v2.00:</strong> SMA to IPEX feeder + 2 dBi antenna included — better range out of the box, no chip modification needed.</li>
+					<li>Competitor boards with an external antenna socket require moving a resistor on the ESP8266 module before it does anything — ours work the moment you plug an antenna in.</li>
+					<li>Ships from the USA — no customs delays, no surprise tariff fees.</li>
+					<li>Custom 3D-printed vented case. Every board tested before shipping.</li>
 				</ul>
 			</div>
 		</div>
@@ -392,7 +419,7 @@
 					<tr class="group-row">
 						<th></th>
 						<th colspan="2" class="our-head">★ Our Products</th>
-						<th colspan="4" class="comp-head">Competitors</th>
+						<th colspan="3" class="comp-head">Competitors</th>
 					</tr>
 					<tr class="feat-row">
 						<th>Feature</th>
@@ -400,36 +427,32 @@
 						<th class="our-th">v2.00</th>
 						<th>v2.51</th>
 						<th>v2.53</th>
-						<th>Competitors</th>
 						<th>Ratgdo DIY</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr><td>ESP Chip</td><td>ESP8266</td><td>ESP8266</td><td>ESP8266</td><td>ESP8266</td><td>ESP32</td><td>ESP8266</td></tr>
-					<tr><td>Replaceable ESP Module</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="yes">Yes</td></tr>
-					<tr><td>Fuse Protection</td><td class="no">No*</td><td class="no">No*</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td></tr>
-					<tr><td>6V–30V Converter</td><td class="no">No*</td><td class="no">No*</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td></tr>
-					<tr><td>Buzzer</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
-					<tr><td>Temperature Sensor</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
-					<tr><td>Humidity Sensor</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
-					<tr><td>Status LEDs (Power / Data)</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td></tr>
-					<tr><td>Access to All Circuits on PCB</td><td>Modified Only*</td><td>Modified Only*</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td></tr>
-					<tr><td>Home Assistant Integration (GDO)</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
-					<tr><td>Apple HomeKit Support</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
-					<tr><td>Wi-Fi Antenna</td><td>On-board + SMA Pin†</td><td>On-board + SMA + 2 dBi†</td><td>On-board</td><td>On-board + 2 dBi</td><td>Standard</td><td>Standard</td></tr>
-					<tr><td>USB Connector</td><td class="yes">USB-C</td><td class="yes">USB-C</td><td class="yes">USB-C</td><td>Micro-USB</td><td>Varies</td><td>Micro-USB</td></tr>
-					<tr><td>Camera</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
-					<tr><td>Obstruction Status</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td>Partial</td><td class="no">No</td></tr>
-					<tr><td>Light Control &amp; Status</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
-					<tr><td>Door Control &amp; Status</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
-					<tr><td>Wireless Remote Lockout</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
-					<tr><td>Tariffs (US &amp; Canada)</td><td>N/A — Ships from USA</td><td>N/A — Ships from USA</td><td class="yes">Included</td><td class="yes">Included</td><td class="no">May Apply</td><td>N/A</td></tr>
+					<tr><td>ESP Chip</td><td>ESP8266</td><td>ESP8266</td><td>ESP8266</td><td>ESP8266</td><td>ESP8266</td></tr>
+					<tr><td>Replaceable ESP Module</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+					<tr><td>Fuse Protection</td><td class="no">No*</td><td class="no">No*</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td></tr>
+					<tr><td>6V–30V Converter</td><td class="no">No*</td><td class="no">No*</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td></tr>
+					<tr><td>Status LEDs (Power / Data)</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td></tr>
+					<tr><td>Home Assistant Integration (GDO)</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+					<tr><td>Apple HomeKit Support</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+					<tr><td>Wi-Fi Antenna</td><td>On-board + SMA Port†</td><td>On-board + SMA to IPEX + 2 dBi‡</td><td>On-board</td><td>On-board + 2 dBi§</td><td>On-board</td></tr>
+					<tr><td>USB Connector</td><td class="yes">USB-C</td><td class="yes">USB-C</td><td class="yes">USB-C</td><td>Micro-USB</td><td>Micro-USB</td></tr>
+					<tr><td>Obstruction Status</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td></tr>
+					<tr><td>Light Control &amp; Status</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+					<tr><td>Door Control &amp; Status</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+					<tr><td>Wireless Remote Lockout</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+					<tr><td>Tariffs (US &amp; Canada)</td><td>N/A — Ships from USA</td><td>N/A — Ships from USA</td><td class="yes">Included</td><td class="yes">Included</td><td>N/A</td></tr>
 				</tbody>
 			</table>
 		</div>
 		<p class="small">
-			* 6V–30V converter and fuse protection are mainly relevant for battery-operated openers. For wall-powered setups the 5 V USB-C supply is sufficient. PCB circuit access is possible with minor modification but is not direct out of the box.<br>
-			† v1.00 and v2.00 include a dedicated SMA connector — attach any standard SMA antenna at any time with no soldering required.
+			* 6V–30V converter and fuse protection are mainly relevant for battery-operated openers. For wall-powered setups, 5V USB-C is regulated from power adapter.<br>
+			† v1.00: SMA port on board — plug in any SMA antenna immediately, no module modification needed.<br>
+			‡ v2.00: SMA to IPEX feeder bypasses the ceramic antenna entirely; 2 dBi antenna included, no module modification needed.<br>
+			§ Competitor boards route RF through the ceramic antenna by default — the external socket does nothing until a resistor is repositioned on the ESP8266 module PCB.
 		</p>
 	</section>
 
@@ -438,25 +461,25 @@
 		<h2>What Is Included</h2>
 		<div class="grid">
 			<div class="box">
-				<h3>v1.00 — On-board Antenna + SMA Pin</h3>
+				<h3>v1.00 — On-board Antenna + SMA Port</h3>
 				<ul>
-					<li>1× Slim PCB (on-board antenna + SMA pin)</li>
+					<li>1× Slim PCB (on-board antenna + SMA port)</li>
 					<li>1× ESP8266 D1 Mini (USB-C)</li>
 					<li>1× Custom 3D-Printed Vented Case</li>
 					<li>1× 3C 26 AWG Wire</li>
 				</ul>
-				<p class="small">Upgrade to any SMA antenna at any time — no soldering needed.</p>
+				<p class="small">Plug in any SMA antenna at any time — no soldering or ESP module modification needed.</p>
 			</div>
 			<div class="box">
-				<h3>v2.00 — On-board + 2 dBi SMA Antenna</h3>
+				<h3>v2.00 — On-board + SMA to IPEX Feeder + 2 dBi Antenna</h3>
 				<ul>
-					<li>1× Slim PCB (on-board antenna + SMA pin)</li>
+					<li>1× Slim PCB (on-board antenna + SMA to IPEX feeder)</li>
 					<li>1× ESP8266 D1 Mini (USB-C)</li>
 					<li>1× Custom 3D-Printed Vented Case</li>
 					<li>1× 2 dBi External SMA Antenna</li>
 					<li>1× 3C 26 AWG Wire</li>
 				</ul>
-				<p class="small">Better range out of the box. Still upgradeable to any higher-gain SMA antenna.</p>
+				<p class="small">Better range out of the box. Still upgradeable to any higher-gain SMA antenna — no module modification needed.</p>
 			</div>
 		</div>
 		<div class="warning" style="margin-top:14px;">
