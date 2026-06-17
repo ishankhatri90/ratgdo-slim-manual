@@ -375,12 +375,29 @@
 				</ul>
 				<strong>Steps:</strong>
 				<ol>
-					<li>Power opener OFF and complete wiring first.</li>
-					<li>Power on via USB-C. Connect to <strong>ratgdo</strong> Wi-Fi AP.</li>
-					<li>Open <code>192.168.4.1</code> → select your 2.4 GHz network.</li>
-					<li>Add in Home Assistant → Settings → Devices &amp; Services.</li>
-					<li>Create HomeKit bridge in HA → add to Apple Home.</li>
-					<li>Test door, light, obstruction sensor. Assign static IP.</li>
+					<li><strong>Prepare your workspace.</strong> Ensure garage door opener power is OFF. Work in a well-lit area with easy access to the opener terminals.</li>
+					<li><strong>Choose firmware (optional).</strong> Ships pre-flashed with ESPHome firmware. If reflashing is needed, use the <a href="https://ratgdo.github.io/esphome-ratgdo/">ESPHome Web Flasher</a> before installation.</li>
+					<li><strong>Wire the device — do not apply power yet.</strong> Connect wires from the garage door opener to ratgdo-slim terminals per the wiring diagram above.</li>
+					<li><strong>Double-check wiring.</strong> Verify all connections are secure and correct. Incorrect wiring can damage equipment.</li>
+					<li><strong>Apply power and configure Wi-Fi.</strong>
+						<ol type="a">
+							<li>Connect 5V USB power via USB-A to USB-C cable.</li>
+							<li>On your phone/tablet, join the <strong>ratgdo</strong> Wi-Fi network.</li>
+							<li>Open a browser and go to <code>192.168.4.1</code>.</li>
+							<li>Select your home 2.4 GHz Wi-Fi network and enter the password.</li>
+							<li>Wait 30–90 seconds for the connection to complete.</li>
+						</ol>
+					</li>
+					<li><strong>Add to Home Assistant.</strong>
+						<ol type="a">
+							<li>Open the Home Assistant web interface.</li>
+							<li>Go to Settings → Devices &amp; Services.</li>
+							<li>Click <strong>Add Integration</strong> and search for <strong>ESPHome</strong>.</li>
+							<li>The ratgdo-slim device should be discovered automatically.</li>
+						</ol>
+					</li>
+					<li><strong>Calibrate door travel.</strong> Use Home Assistant to command the door fully open, then fully closed. This teaches ratgdo-slim the travel times for accurate state reporting.</li>
+					<li><strong>Test functionality.</strong> Test door open/close, light control (if supported), and verify the obstruction sensor reports correctly. Assign a static IP.</li>
 				</ol>
 			</div>
 			<div class="box">
@@ -394,12 +411,29 @@
 				</ul>
 				<strong>Steps:</strong>
 				<ol>
-					<li>Power opener OFF and complete wiring first.</li>
-					<li>Power on via USB-C. Connect to <strong>Garage-Door-XXXXX</strong> (last 5 MAC chars).</li>
-					<li>Open <code>192.168.4.1</code> → select your 2.4 GHz network.</li>
-					<li>Navigate to device IP → get your HomeKit pairing code.</li>
-					<li>Add accessory in Apple Home.</li>
-					<li>Test door, light, sensor. Assign static IP.</li>
+					<li><strong>Prepare your workspace.</strong> Ensure garage door opener power is OFF. Work in a well-lit area with easy access to the opener terminals.</li>
+					<li><strong>Flash HomeKit firmware (if not pre-installed).</strong> If your device doesn't have HomeKit firmware pre-installed, flash the native ratgdo firmware with HomeKit support using the <a href="https://ratgdo.github.io/homekit-ratgdo/flash.html">ratgdo web installer</a>.</li>
+					<li><strong>Wire the device — do not apply power yet.</strong> Connect wires from the garage door opener to ratgdo-slim terminals per the wiring diagram above.</li>
+					<li><strong>Double-check wiring.</strong> Verify all connections are secure and correct. Incorrect wiring can damage equipment.</li>
+					<li><strong>Apply power and configure Wi-Fi.</strong>
+						<ol type="a">
+							<li>Connect 5V USB power via USB-A to USB-C cable.</li>
+							<li>On your iPhone/iPad, join the <strong>Garage-Door-XXXXX</strong> Wi-Fi network (last 5 MAC chars).</li>
+							<li>Open Safari and go to <code>192.168.4.1</code>.</li>
+							<li>Select your home 2.4 GHz Wi-Fi network and enter the password.</li>
+							<li>Wait 30–90 seconds for the connection to complete. If it doesn't connect automatically, it will prompt you to add the Wi-Fi network.</li>
+						</ol>
+					</li>
+					<li><strong>Add to Apple Home.</strong>
+						<ol type="a">
+							<li>Open the Home app on your iPhone or iPad.</li>
+							<li>Tap the <strong>+</strong> icon to add an accessory.</li>
+							<li>Tap <strong>"I Don't Have a Code or Can't Scan"</strong>.</li>
+							<li>The ratgdo-slim device should appear in the list — select it and follow the prompts.</li>
+						</ol>
+						<p style="margin:6px 0 0;font-size:13px;color:#5c6b75;">To find your HomeKit code: navigate to the ratgdo-slim's IP address in a browser — the pairing code is shown on that page. Assign a static IP from your router for consistent access.</p>
+					</li>
+					<li><strong>Test functionality.</strong> Test door open/close operations and light control (if your opener supports it).</li>
 				</ol>
 			</div>
 		</div>
@@ -518,10 +552,12 @@
 	<section class="section">
 		<h2>Shipping &amp; Returns</h2>
 		<ul>
-			<li>Free shipping — lower 48 US states.</li>
 			<li>No returns for wiring errors, incompatibility, or setup issues.</li>
 		</ul>
 		<p class="small">Ships from the USA — no import tariffs for US buyers. Works with the open-source ratgdo ecosystem. Home Assistant and related integrations are community-driven and may change over time.</p>
+		<div class="warning" style="margin-top:14px;">
+			<strong>⚠ Disclaimer — Use at Your Own Risk.</strong> This product is provided as-is for DIY and home automation use. Installation, configuration, and use are solely at your own risk. We are not responsible for any damage to your garage door opener, vehicle, property, or any other equipment resulting from installation or use of this device. This product is not intended for safety-critical or security-critical applications. By purchasing and using this device, you accept full responsibility for proper installation and operation.
+		</div>
 	</section>
 
 	<!-- CTA -->

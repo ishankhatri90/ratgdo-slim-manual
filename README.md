@@ -117,12 +117,42 @@ This device works with the open-source ratgdo ecosystem. While everything runs g
          <td><strong>Installation Guide</strong></td>
          <td>
             <ol>
-               <li>Power opener OFF, verify wiring.</li>
-               <li>If not already flashed, flash via <a href="https://ratgdo.github.io/esphome-ratgdo/">ESPHome Web Flasher</a>.</li>
-               <li>Connect to AP <strong>ratgdo</strong>, open <code>192.168.4.1</code>, configure 2.4GHz Wi-Fi.</li>
-               <li>Add device in Home Assistant (Settings > Devices &amp; Services).</li>
-               <li>Create HomeKit bridge in Home Assistant and add bridge in Apple Home.</li>
-               <li>Test door/light/sensor and assign static IP.</li>
+               <li><strong>Prepare Your Workspace</strong><br />Ensure garage door opener power is OFF. Work in a well-lit area with easy access to the opener terminals.</li>
+               <li><strong>Choose Firmware (Optional)</strong><br />The device comes with Home Assistant firmware pre-installed. For Apple HomeKit support, flash custom firmware before installation. If not already flashed, use the <a href="https://ratgdo.github.io/esphome-ratgdo/">ESPHome Web Flasher</a>.</li>
+               <li><strong>Wire the Device (Do Not Apply Power Yet)</strong><br />Connect wires from garage door opener to ratgdo-slim terminals per the Wiring Diagram above.</li>
+               <li><strong>Double-Check Wiring</strong><br />Verify all connections are secure and correct before proceeding. Incorrect wiring can damage equipment.</li>
+               <li><strong>Apply Power and Configure Wi-Fi</strong>
+                  <ol type="i">
+                     <li>Connect 5V USB power to the ratgdo-slim.</li>
+                     <li>On your phone/tablet, join the <strong>ratgdo</strong> Wi-Fi network.</li>
+                     <li>Open a web browser and connect to <code>192.168.4.1</code>.</li>
+                     <li>Select your home 2.4 GHz Wi-Fi network and enter password.</li>
+                     <li>Wait 30–90 seconds for connection to complete.</li>
+                  </ol>
+               </li>
+               <li><strong>Add to Home Assistant</strong>
+                  <ol type="i">
+                     <li>Open Home Assistant web interface.</li>
+                     <li>Go to Settings → Devices &amp; Services.</li>
+                     <li>Click <strong>Add Integration</strong>.</li>
+                     <li>Search for and select <strong>ESPHome</strong>.</li>
+                     <li>The ratgdo-slim device should be discovered automatically.</li>
+                  </ol>
+               </li>
+               <li><strong>Calibrate Door Travel</strong><br />After adding to Home Assistant, calibrate door timing:
+                  <ol type="i">
+                     <li>Use Home Assistant to command door to open fully.</li>
+                     <li>Use Home Assistant to command door to close fully.</li>
+                  </ol>
+                  This teaches ratgdo-slim the travel times for accurate state reporting.
+               </li>
+               <li><strong>Test Functionality</strong>
+                  <ul>
+                     <li>Test door open/close operations.</li>
+                     <li>Test light control (if your opener supports it).</li>
+                     <li>Verify obstruction sensor reports correctly.</li>
+                  </ul>
+               </li>
             </ol>
          </td>
          <td>
