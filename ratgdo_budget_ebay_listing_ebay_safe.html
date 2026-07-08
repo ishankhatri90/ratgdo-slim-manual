@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RATGDO Slim Budget Version — eBay Listing</title>
+<style>
+  :root {
+    --navy:#061632;
+    --blue:#0c6fb3;
+    --teal:#006e7a;
+    --ink:#17212b;
+    --muted:#5f6b76;
+    --line:#d9e1e8;
+    --card:#ffffff;
+    --soft:#f4f8fb;
+    --red:#d82929;
+    --green:#0c8f36;
+    --black:#111111;
+    --orange:#f28f3b;
+  }
+
+  * { box-sizing:border-box; }
+  body {
+    margin:0;
+    padding:0;
+    background:#ffffff;
+    color:var(--ink);
+    font-family:Arial, Helvetica, sans-serif;
+    line-height:1.55;
+  }
+
+  .listing {
+    max-width:1000px;
+    margin:0 auto;
+    background:#fff;
+  }
+
+  .hero {
+    padding:34px 28px 28px;
+    background:linear-gradient(135deg,#061632 0%,#0b4962 55%,#0c6f85 100%);
+    color:#fff;
+    border-radius:0 0 18px 18px;
+  }
+
+  .hero h1 {
+    margin:0 0 8px;
+    font-size:34px;
+    line-height:1.15;
+    font-weight:800;
+    letter-spacing:.02em;
+  }
+
+  .hero .subtitle {
+    margin:0 0 18px;
+    font-size:17px;
+    color:#e9f5f7;
+    max-width:780px;
+  }
+
+  .pills {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  .pill {
+    display:inline-block;
+    padding:7px 12px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    border:1px solid rgba(255,255,255,.28);
+    background:rgba(255,255,255,.14);
+  }
+
+  .pill.price {
+    background:#fff;
+    color:#063847;
+  }
+
+  .section {
+    padding:26px 28px;
+    border-top:1px solid var(--line);
+  }
+
+  h2 {
+    margin:0 0 16px;
+    color:#0a3442;
+    font-size:23px;
+    line-height:1.25;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  h2:before {
+    content:"";
+    width:5px;
+    height:24px;
+    background:var(--teal);
+    border-radius:3px;
+    display:inline-block;
+  }
+
+  h3 {
+    margin:0 0 10px;
+    color:#104a5a;
+    font-size:18px;
+  }
+
+  p { margin:0 0 10px; }
+  ul, ol { margin:8px 0 8px 22px; padding:0; }
+  li { margin:4px 0; }
+
+  .grid {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:16px;
+  }
+
+  .box {
+    background:var(--soft);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px;
+  }
+
+  .box.white {
+    background:#fff;
+  }
+
+  .callout {
+    margin-top:14px;
+    padding:15px 18px;
+    border-radius:12px;
+    border:1px solid #f0c97b;
+    border-left:6px solid var(--orange);
+    background:#fff8e8;
+  }
+
+  .info {
+    margin-top:14px;
+    padding:15px 18px;
+    border-radius:12px;
+    border:1px solid #b9dce2;
+    border-left:6px solid var(--teal);
+    background:#eef9fb;
+  }
+
+  .wire-table-wrap {
+    overflow-x:auto;
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:#fff;
+  }
+
+  table {
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+  }
+
+  th, td {
+    padding:11px 12px;
+    border-bottom:1px solid #e6edf2;
+    border-right:1px solid #e6edf2;
+    text-align:left;
+    vertical-align:top;
+  }
+
+  th {
+    background:#eaf3f6;
+    color:#0a3442;
+    font-weight:800;
+  }
+
+  tr:last-child td { border-bottom:0; }
+  th:last-child, td:last-child { border-right:0; }
+
+  .wire-red { color:var(--red); font-weight:800; }
+  .wire-green { color:var(--green); font-weight:800; }
+  .wire-black { color:var(--black); font-weight:800; }
+
+  .compat {
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:12px;
+  }
+
+  .compat-card {
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px;
+    background:#fff;
+  }
+
+  .compat-card.good {
+    border-color:#b4d9c1;
+    background:#f0fbf4;
+  }
+
+  .compat-card.warn {
+    border-color:#f2c782;
+    background:#fff8e9;
+  }
+
+  .compat-card.bad {
+    border-color:#efb5b5;
+    background:#fff3f3;
+  }
+
+  .dot {
+    display:inline-block;
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    margin-right:6px;
+    vertical-align:-2px;
+    border:1px solid #333;
+  }
+
+  .yellow { background:#ffe600; }
+  .purple { background:#7d3cc6; }
+  .brown { background:#9a6700; }
+  .orange { background:#ff8a2a; }
+  .red-dot { background:#f01919; }
+  .white { background:#fff; }
+  .green-dot { background:#09b85b; }
+
+  .features {
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:10px;
+    margin-top:14px;
+  }
+
+  .feature {
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px;
+    text-align:center;
+    font-weight:700;
+    color:#12394a;
+  }
+
+  .price-strip {
+    margin-top:18px;
+    background:#fff;
+    color:#063847;
+    border-radius:14px;
+    padding:14px 16px;
+    display:inline-block;
+    font-size:20px;
+    font-weight:800;
+  }
+
+  .footer-cta {
+    padding:30px 28px;
+    text-align:center;
+    background:linear-gradient(135deg,#eaf7fa,#f7fcfd);
+    border-top:2px solid #b9dce2;
+  }
+
+  .footer-cta p:first-child {
+    margin:0 0 6px;
+    font-size:22px;
+    font-weight:800;
+    color:#063847;
+  }
+
+  .small {
+    color:var(--muted);
+    font-size:13px;
+  }
+
+  @media (max-width:700px) {
+    .hero, .section, .footer-cta { padding-left:16px; padding-right:16px; }
+    .hero h1 { font-size:26px; }
+    .grid, .compat, .features { grid-template-columns:1fr; }
+    table { font-size:13px; }
+  }
+</style>
+</head>
+
+<body>
+<div class="listing">
+
+  <section class="hero">
+    <h1>RATGDO Slim Budget Version</h1>
+    <p class="subtitle">
+      Smart garage door controller for compatible Chamberlain / LiftMaster openers. Local control with ESPHome, Home Assistant, and Apple HomeKit options.
+    </p>
+    <div class="pills">
+      <span class="pill">No External Antenna</span>
+      <span class="pill">Standard D1 Mini</span>
+      <span class="pill">USB-C Power</span>
+      <span class="pill">3-Wire Cable Included</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>What This Listing Includes</h2>
+    <div class="grid">
+      <div class="box">
+        <h3>Included Hardware</h3>
+        <ul>
+          <li>1× RATGDO Slim controller board</li>
+          <li>1× Standard ESP8266 D1 Mini module, USB-C style</li>
+          <li>1× Pre-wired 3-conductor cable: <span class="wire-red">red</span>, <span class="wire-green">green</span>, and <span class="wire-black">black</span></li>
+          <li>Pre-flashed firmware option depending on listing selection</li>
+        </ul>
+        <p class="small">USB power adapter and USB cable are not included unless specifically selected or stated in the order.</p>
+      </div>
+
+      <div class="box">
+        <h3>Budget Version Notes</h3>
+        <ul>
+          <li>No external Wi-Fi antenna is included.</li>
+          <li>Uses the standard D1 Mini on-board Wi-Fi antenna.</li>
+          <li>Lower-cost version designed for buyers who do not need an external antenna.</li>
+          <li>Best when the garage opener is within normal Wi-Fi range.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info">
+      <strong>Recommended for buyers who want a lower-cost RATGDO-style local garage controller and do not need an external antenna.</strong>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Key Features</h2>
+    <div class="features">
+      <div class="feature">ESPHome Firmware Option</div>
+      <div class="feature">Home Assistant Local Control</div>
+      <div class="feature">Apple HomeKit Option</div>
+      <div class="feature">USB-C Setup / Power</div>
+    </div>
+    <ul>
+      <li>Local garage door control without relying on a cloud subscription.</li>
+      <li>Door status, obstruction status, and light control support depend on opener compatibility and selected firmware.</li>
+      <li>Works with the open-source RATGDO ecosystem.</li>
+      <li>Designed for DIY users familiar with Home Assistant, ESPHome, or HomeKit setup.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Correct Wiring Reference</h2>
+    <p>
+      This version uses the included 3-conductor cable with <span class="wire-red">red</span>, <span class="wire-green">green</span>, and <span class="wire-black">black</span> conductors.
+      Wire the opener side as shown below.
+    </p>
+
+    <div class="wire-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Wire Color</th>
+            <th>Garage Opener Terminal</th>
+            <th>Purpose</th>
+            <th>Controller Side Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="wire-red">Red</span></td>
+            <td>RED / CTRL terminal</td>
+            <td>Open / close control line</td>
+            <td>Connects to the RATGDO red / middle connection point per the included diagram.</td>
+          </tr>
+          <tr>
+            <td><span class="wire-green">Green</span></td>
+            <td>WHITE / GROUND terminal</td>
+            <td>Common / ground</td>
+            <td>Connects to the RATGDO green connection point per the included diagram.</td>
+          </tr>
+          <tr>
+            <td><span class="wire-black">Black</span></td>
+            <td>BLACK / OBSTRUCTION terminal</td>
+            <td>Safety sensor / obstruction line</td>
+            <td>Connects to the RATGDO black connection point per the included diagram.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <strong>Wire before powering the controller.</strong> Do not plug in USB power until all three opener-side connections are verified.
+      Incorrect wiring may damage the controller or opener.
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Compatibility</h2>
+    <div class="compat">
+      <div class="compat-card good">
+        <h3>Fully Supported</h3>
+        <p><span class="dot yellow"></span><strong>Yellow learn button</strong></p>
+        <p>Security+ 2.0 openers are the main supported target for this listing.</p>
+      </div>
+
+      <div class="compat-card warn">
+        <h3>Experimental / Limited</h3>
+        <p>
+          <span class="dot purple"></span>Purple
+          <span class="dot brown"></span>Brown
+          <span class="dot orange"></span>Orange
+          <span class="dot red-dot"></span>Red
+        </p>
+        <p>Security+ 1.0 support may vary by opener and wall panel.</p>
+      </div>
+
+      <div class="compat-card bad">
+        <h3>Not Supported</h3>
+        <p><span class="dot white"></span>White learn button</p>
+        <p><span class="dot green-dot"></span>Green learn button</p>
+        <p>Also not supported on LiftMaster / Chamberlain jackshaft models 8500 / RJ020 and 8500C / RJ020C.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Firmware / Setup Options</h2>
+    <div class="grid">
+      <div class="box white">
+        <h3>ESPHome / Home Assistant</h3>
+        <ul>
+          <li>Recommended for Home Assistant users.</li>
+          <li>Supports local control and ESPHome logs.</li>
+          <li>Can be bridged to Apple Home using Home Assistant HomeKit Bridge.</li>
+          <li>Best option for mixed Apple / Android households.</li>
+        </ul>
+      </div>
+
+      <div class="box white">
+        <h3>HomeKit Firmware Option</h3>
+        <ul>
+          <li>Useful for Apple Home users who want direct HomeKit pairing.</li>
+          <li>Requires Apple Home app and a Home hub for remote access.</li>
+          <li>Feature behavior depends on firmware and opener compatibility.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info">
+      <strong>2.4 GHz Wi-Fi required.</strong> For best results, confirm your garage has stable Wi-Fi before ordering the no-antenna budget version.
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Basic Installation Steps</h2>
+    <ol>
+      <li>Turn off power to the garage door opener.</li>
+      <li>Connect the included 3-wire cable to the opener terminals:
+        <span class="wire-red">red → RED/CTRL</span>,
+        <span class="wire-green">green → WHITE/GROUND</span>,
+        <span class="wire-black">black → BLACK/OBSTRUCTION</span>.
+      </li>
+      <li>Verify the RATGDO-side wire order using the included photo/diagram.</li>
+      <li>After wiring is confirmed, connect USB-C power.</li>
+      <li>Configure Wi-Fi and firmware using the selected setup method.</li>
+      <li>Test door, light, and obstruction status before relying on automations.</li>
+    </ol>
+  </section>
+
+  <section class="section">
+    <h2>Important Buyer Notes</h2>
+    <ul>
+      <li>This is a DIY electronics product for users comfortable with garage opener wiring and smart-home setup.</li>
+      <li>Please verify opener compatibility before purchase. Compatibility depends on opener model, learn-button color, firmware choice, and installation.</li>
+      <li>Incorrect wiring or unsupported opener models may prevent the controller from working correctly.</li>
+      <li>This device is not a safety-critical device. Always keep the opener’s factory safety features connected and functional.</li>
+      <li>Orders are packed carefully and shipped according to the shipping service selected at checkout.</li>
+    </ul>
+  </section>
+
+  <div class="footer-cta">
+    <p>Budget local garage control — no external antenna version.</p>
+    <p class="small">Please confirm opener compatibility before purchase.</p>
+  </div>
+
+</div>
+</body>
+</html>
